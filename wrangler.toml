@@ -1,0 +1,11 @@
+main = "./.cloudflare/worker.js"
+site.bucket = "./.cloudflare/public"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+script_name = "src/handlers.js" # W/O script_name one can't build. But with script_name one would need to run another wrangler instance. see: https://github.com/cloudflare/workers-sdk/pull/7292
+
+[[migrations]]
+tag = "v1"                        # Should be unique for each entry
+new_classes = ["MyDurableObject"] # Array of new classes

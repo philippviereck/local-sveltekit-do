@@ -6,8 +6,12 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env: {
+				MY_DURABLE_OBJECT: DurableObjectNamespace;
+			};
+		}
 	}
 }
 
-export {};
+export { };
