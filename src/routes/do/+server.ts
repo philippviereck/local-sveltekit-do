@@ -15,6 +15,9 @@ export const GET = async ({ platform }) => {
     const id = platform.env.MY_DURABLE_OBJECT.idFromName("foo");
     const stub = platform.env.MY_DURABLE_OBJECT.get(id);
 
+    // Error: Cannot access `MyDurableObject#sayHello` as Durable Object RPC is not yet supported between multiple `wrangler dev` sessions.
+    // const text = await stub.sayHello();
+
     const response = await stub.fetch("https://foo.bar");
     const text = await response.text();
 
