@@ -7,9 +7,9 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		interface Platform {
-			env: {
-				MY_DURABLE_OBJECT: DurableObjectNamespace;
-			};
+			env: Env
+			cf: CfProperties
+			ctx: ExecutionContext
 		}
 	}
 }
