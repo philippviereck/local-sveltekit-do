@@ -1,10 +1,10 @@
 import { hc } from 'hono/client'
 import { error, json } from '@sveltejs/kit';
-import type { MyDurableObjectApp } from '../../handlers';
+import type { MyDurableObjectApp } from '../../../../handlers';
 
 
 
-export const GET = async ({ platform }) => {
+export const GET = async ({ platform, params }) => {
 
     if (!platform) {
         return error(500, "Platform object undefined");
@@ -26,7 +26,11 @@ export const GET = async ({ platform }) => {
         fetch: stub.fetch
     })
 
-    const res = await client.index.$get()
+    const res = await client.increment[':amount?'].$get({
+        param: {
+            amount: params.amount
+        }
+    });
     console.log(res);
     const jsonResponse = await res.json()
 
