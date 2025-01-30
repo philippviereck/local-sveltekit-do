@@ -4,7 +4,7 @@ import type { MyDurableObjectApp } from '../../../../handlers';
 
 
 
-export const GET = async ({ platform, params }) => {
+export const GET = async ({ platform, params, url }) => {
 
     if (!platform) {
         return error(500, "Platform object undefined");
@@ -16,14 +16,15 @@ export const GET = async ({ platform, params }) => {
         return error(500, "Durable Object namespace not found");
     }
 
-    const id = platform.env.MY_DURABLE_OBJECT.idFromName("foo");
+    const name = url.searchParams.get('name') || 'bar'
+    const id = platform.env.MY_DURABLE_OBJECT.idFromName(name);
     const stub = platform.env.MY_DURABLE_OBJECT.get(id);
 
     // Error: Cannot access `MyDurableObject#sayHello` as Durable Object RPC is not yet supported between multiple `wrangler dev` sessions.
     // const text = await stub.sayHello();
 
-    const client = hc<MyDurableObjectApp>('https://foo.bar', {
-        fetch: stub.fetch
+    const client = hc<MyDurableObjectApp>('http://foo.bar', {
+        fetch: stub.fetch.bind(stub)
     })
 
     const res = await client.decrement[':amount?'].$get({
@@ -36,7 +37,7 @@ export const GET = async ({ platform, params }) => {
 
     return json(jsonResponse)
 
-    const response = await stub.fetch("https://foo.bar");
+    const response = await stub.fetch("http://foo.bar");
     const text = await response.text();
 
     return new Response(text);
