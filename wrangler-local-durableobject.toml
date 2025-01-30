@@ -1,0 +1,14 @@
+name = "do-worker"
+compatibility_date = "2025-01-24"
+compatibility_flags = ["nodejs_compat"]
+
+
+main = "./src/handlers.ts"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+
+[[migrations]]
+tag = "v1"                        # Should be unique for each entry
+new_classes = ["MyDurableObject"] # Array of new classes

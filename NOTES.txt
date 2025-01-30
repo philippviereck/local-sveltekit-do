@@ -1,0 +1,4 @@
+Issues/Caveats:
+- requires pnpm, extra dependency (like concurrently) or seperate terminal
+- RPC not working (due to platformProxy limitations)
+- Deploy/Building not working
