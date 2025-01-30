@@ -6,22 +6,28 @@
 	"scripts": {
 		"dev": "pnpm run \"/^dev:.*/\"",
 		"dev:sveltekit": "vite dev",
-		"dev:durableobject": "wrangler dev --config wrangler-local-durableobject.toml",
+		"dev:durableobject": "wrangler dev --config wrangler-durableobject.toml",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "pnpm run \"/^preview:.*/\"",
+		"preview:sveltekit": "vite preview",
+		"preview:durableobject": "wrangler dev --config wrangler-durableobject.toml",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"tail": "wrangler tail",
-		"cf-typegen:dev": "wrangler types --config wrangler-local-sveltekit.toml && mv worker-configuration.d.ts src/"
+		"tail": "pnpm run \"/^tail:.*/\"",
+		"tail:sveltekit": "wrangler tail --config wrangler-sveltekit.toml",
+		"tail:durableobject": "wrangler tail --config wrangler-durableobject.toml",
+		"deploy": "pnpm run \"/^deploy:.*/\"",
+		"deploy:sveltekit": "pnpm run build && wrangler deploy --config wrangler-sveltekit.toml",
+		"deploy:durableobject": "wrangler deploy --config wrangler-durableobject.toml",
+		"cf-typegen": "wrangler types --config wrangler-sveltekit.toml && mv worker-configuration.d.ts src/"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250129.0",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
-		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/adapter-cloudflare-workers": "^2.7.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
@@ -37,10 +43,5 @@
 		"typescript-eslint": "^8.20.0",
 		"vite": "^6.0.0",
 		"wrangler": "^3.106.0"
-	},
-	"pnpm": {
-		"patchedDependencies": {
-			"@sveltejs/adapter-cloudflare-workers": "patches/@sveltejs__adapter-cloudflare-workers.patch"
-		}
 	}
 }

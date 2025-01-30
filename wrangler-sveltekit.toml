@@ -1,0 +1,10 @@
+name = "sveltekit-worker"
+compatibility_date = "2025-01-24"
+
+main = "./.cloudflare/worker.js"
+site.bucket = "./.cloudflare/public"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+script_name = "do-worker"
